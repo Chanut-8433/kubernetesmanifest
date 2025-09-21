@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flaskdemo1
-        image: linuxgray039/test:10
+        image: linuxgray039/test:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
