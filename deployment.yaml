@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaskdemo1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flaskdemo1
+  template:
+    metadata:
+      labels:
+        app: flaskdemo1
+    spec:
+      containers:
+      - name: flaskdemo1
+        image: linuxgray039/test:10
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
