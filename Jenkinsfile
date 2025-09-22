@@ -15,7 +15,7 @@ node {
                     // Print before update
                     sh "cat deployment.yaml"
                     
-                    sh "sed -i 's+linuxgray039/test.*+chanut8433/test-2:${DOCKERTAG}+g' deployment.yaml"
+                    sh "sed -i 's+chanut8433/test-2.*+chanut8433/test-2:${DOCKERTAG}+g' deployment.yaml"
 
                     
                     // Print after update
