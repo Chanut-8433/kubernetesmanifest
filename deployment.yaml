@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flaskdemo1
-        image: chanut8433/test-2:PLACEHOLDER
+        image: chanut8433/test-2:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
