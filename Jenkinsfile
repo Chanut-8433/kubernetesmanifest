@@ -10,12 +10,12 @@ node {
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                     sh "git config user.email chanut.non@gmail.com"
-                    sh "git config user.name chanut-8433"
+                    sh "git config user.name Chanut-8433"
                     
                     // Print before update
                     sh "cat deployment.yaml"
                     
-                    sh "sed -i 's+chanut8433/test-2.*+chanut8433/test-2:${DOCKERTAG}+g' deployment.yaml"
+                    sh "sed -i 's+chanut8433/test.*+chanut8433/test-2:${DOCKERTAG}+g' deployment.yaml"
 
                     
                     // Print after update
