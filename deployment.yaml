@@ -28,7 +28,7 @@ spec:
         fsGroup: 2000
       containers:
       - name: flaskdemo1
-        image: chanut8433/test:${DOCKERTAG}   # ← Jenkins จะอัปเดตค่าแท็กให้
+        image: chanut8433/test:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
