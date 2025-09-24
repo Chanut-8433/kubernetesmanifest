@@ -1,6 +1,4 @@
 node {
-    def app
-
     stage('Clone repository') {
         checkout scm
     }
@@ -9,22 +7,26 @@ node {
         script {
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    sh "git config user.email chanut.non@gmail.com"
-                    sh "git config user.name Chanut-8433"
-                    
-                    // Print before update
-                    sh "cat deployment.yaml"
-                    
-                    sh "sed -i 's+chanut8433/test.*+chanut8433/test-2:${DOCKERTAG}+g' deployment.yaml"
+                    sh """
+                        git config user.email "chanut.non@gmail.com"
+                        git config user.name "Chanut-8433"
 
-                    
-                    // Print after update
-                    sh "cat deployment.yaml"
-                    
-                    // Git commit and push
-                    sh "git add ."
-                    sh "git commit -m 'Updated image tag to latest by Jenkins Job: ${env.BUILD_NUMBER}'"
-                    sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Chanut-8433/kubernetesmanifest.git HEAD:main"
+                        echo "Before update:"
+                        grep 'image:' deployment.yaml || true
+
+                        # Update only the image line
+                        sed -i "s|image: chanut8433/test.*|image: chanut8433/test:${DOCKERTAG}|g" deployment.yaml
+
+                        echo "After update:"
+                        grep 'image:' deployment.yaml || true
+
+                        git add deployment.yaml
+                        git commit -m "Update image tag to ${DOCKERTAG} by Jenkins Build ${BUILD_NUMBER}" || echo "No changes to commit"
+
+                        set +x
+                        git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Chanut-8433/kubernetesmanifest.git HEAD:main
+                        set -x
+                    """
                 }
             }
         }
