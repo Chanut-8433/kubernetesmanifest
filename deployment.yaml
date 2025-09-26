@@ -28,7 +28,7 @@ spec:
         fsGroup: 2000
       containers:
       - name: flaskdemo1
-        image: chanut8433/test:17
+        image: chanut8433/test:18
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
